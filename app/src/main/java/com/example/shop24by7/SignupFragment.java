@@ -1,5 +1,6 @@
 package com.example.shop24by7;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -20,8 +21,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -233,13 +240,32 @@ public class SignupFragment extends Fragment {
     }
     private void checkEmailandPassword(){
         if(email.getText().toString().matches(emailPattern)){
-            if(password.getText().equals(confirmPassword.getText())){
+            if(password.getText().toString().equals(confirmPassword.getText().toString())){
 
+                progressBar.setVisibility(View.VISIBLE);
+                SignupBtn.setEnabled(false);
+                SignupBtn.setTextColor(Color.argb(50,255,255,255));
+                firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Intent mainIntent = new Intent(getActivity(),MainActivity2.class);
+                            startActivity(mainIntent);
+                            getActivity().finish();
+                        }else{
+                            progressBar.setVisibility(View.INVISIBLE);
+                            SignupBtn.setEnabled(true);
+                            SignupBtn.setTextColor(Color.argb(255,255,255,255));
+                            String error = task.getException().getMessage();
+                            Toast.makeText(getActivity(),error , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }else{
-
+                confirmPassword.setError("Password dosen't matches!");
             }
         }else{
-
+            email.setError("Invalid Email!");
         }
     }
 }
