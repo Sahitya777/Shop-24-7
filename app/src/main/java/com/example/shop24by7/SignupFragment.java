@@ -1,5 +1,6 @@
 package com.example.shop24by7;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,11 +8,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +45,23 @@ public class SignupFragment extends Fragment {
 
     private TextView alreadyHaveAnAccount;
     private FrameLayout parentFrameLayout;
+
+    private EditText email;
+    private EditText fullName;
+    private EditText password;
+    private EditText confirmPassword;
+
+    private ImageButton closebutton;
+    private Button SignupBtn;
+
+    private ProgressBar progressBar;
+    private FirebaseAuth firebaseAuth;
+
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+
+
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -70,6 +97,20 @@ public class SignupFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_signup, container, false);
         alreadyHaveAnAccount=view.findViewById(R.id.already_have_an_account);
         parentFrameLayout=getActivity().findViewById(R.id.register_framelayout);
+        email = view.findViewById(R.id.sign_up_email);
+        fullName =view.findViewById(R.id.sign_up_fullname);
+        password = view.findViewById(R.id.sign_up_password);
+        confirmPassword =view.findViewById(R.id.sign_up_confirm_password);
+
+        closebutton=view.findViewById(R.id.sin_up_closebtn);
+        SignupBtn= view.findViewById(R.id.sign_up_button);
+
+        progressBar=view.findViewById(R.id.signup_progressbar);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
+
         return view;
     }
 
@@ -81,6 +122,78 @@ public class SignupFragment extends Fragment {
             public void onClick(View v) {
                 setFragment(new SigninFragment());
             }
+
+        });
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        fullName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        confirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkInputs();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        SignupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkEmailandPassword();
+            }
         });
     }
     private void setFragment(Fragment fragment) {
@@ -88,5 +201,45 @@ public class SignupFragment extends Fragment {
         fragmentTransaction.setCustomAnimations(R.anim.slide_from_left,R.anim.slideout_from_right);
         fragmentTransaction.replace(parentFrameLayout.getId(),fragment);
         fragmentTransaction.commit();
+    }
+
+    private void checkInputs(){
+        if(!TextUtils.isEmpty(email.getText())){
+            if(!TextUtils.isEmpty(fullName.getText())){
+                if(!TextUtils.isEmpty(password.getText()) && password.length()>=8){
+                    if(!TextUtils.isEmpty(confirmPassword.getText())){
+                        SignupBtn.setEnabled(true);
+                        SignupBtn.setTextColor(Color.argb(255,255,255,255));
+                    }else{
+                        SignupBtn.setEnabled(false);
+                        SignupBtn.setTextColor(Color.argb(50,255,255,255));
+                    }
+
+                }
+                else{
+                    SignupBtn.setEnabled(false);
+                    SignupBtn.setTextColor(Color.argb(50,255,255,255));
+                }
+            }else{
+                SignupBtn.setEnabled(false);
+                SignupBtn.setTextColor(Color.argb(50,255,255,255));
+            }
+        }
+        else{
+            SignupBtn.setEnabled(false);
+            SignupBtn.setTextColor(Color.argb(50,255,255,255));
+
+        }
+    }
+    private void checkEmailandPassword(){
+        if(email.getText().toString().matches(emailPattern)){
+            if(password.getText().equals(confirmPassword.getText())){
+
+            }else{
+
+            }
+        }else{
+
+        }
     }
 }
