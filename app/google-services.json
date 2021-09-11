@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "899508811052",
+    "project_id": "shop-24-by-7",
+    "storage_bucket": "shop-24-by-7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899508811052:android:08194ae7d813d5f405a889",
+        "android_client_info": {
+          "package_name": "com.example.shop24by7"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899508811052-p1slo1a408kmidta0ovhtorr40eadsbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSryQcaMPHUGWFfcA3pf55DtIRQRwYSwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899508811052-p1slo1a408kmidta0ovhtorr40eadsbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

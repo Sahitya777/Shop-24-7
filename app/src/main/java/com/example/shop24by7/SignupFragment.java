@@ -2,6 +2,7 @@ package com.example.shop24by7;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +69,8 @@ public class SignupFragment extends Fragment {
 
     private ProgressBar progressBar;
     private FirebaseAuth firebaseAuth;
+
+    private FirebaseFirestore firebaseFirestore;
 
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
 
@@ -115,6 +123,8 @@ public class SignupFragment extends Fragment {
         progressBar=view.findViewById(R.id.signup_progressbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseFirestore=firebaseFirestore.getInstance();
 
 
 
@@ -239,6 +249,10 @@ public class SignupFragment extends Fragment {
         }
     }
     private void checkEmailandPassword(){
+
+        Drawable customErrorIcon = getResources().getDrawable(R.mipmap.erroricon);
+        customErrorIcon.setBounds(0,0,customErrorIcon.getIntrinsicWidth(),customErrorIcon.getIntrinsicHeight());
+
         if(email.getText().toString().matches(emailPattern)){
             if(password.getText().toString().equals(confirmPassword.getText().toString())){
 
@@ -249,9 +263,26 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Intent mainIntent = new Intent(getActivity(),MainActivity2.class);
-                            startActivity(mainIntent);
-                            getActivity().finish();
+                            Map<Object,String> userdata = new HashMap<>();
+                            userdata.put("fullname",fullName.getText().toString());
+
+                            firebaseFirestore.collection("USERS").add(userdata).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                                    if(task.isSuccessful()){
+                                        Intent mainIntent = new Intent(getActivity(),MainActivity2.class);
+                                        startActivity(mainIntent);
+                                        getActivity().finish();
+                                    }else{
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        SignupBtn.setEnabled(true);
+                                        SignupBtn.setTextColor(Color.argb(255,255,255,255));
+                                        String error = task.getException().getMessage();
+                                        Toast.makeText(getActivity(),error , Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
                         }else{
                             progressBar.setVisibility(View.INVISIBLE);
                             SignupBtn.setEnabled(true);
@@ -262,10 +293,10 @@ public class SignupFragment extends Fragment {
                     }
                 });
             }else{
-                confirmPassword.setError("Password dosen't matches!");
+                confirmPassword.setError("Password dosen't matches!",customErrorIcon);
             }
         }else{
-            email.setError("Invalid Email!");
+            email.setError("Invalid Email!",customErrorIcon);
         }
     }
 }
