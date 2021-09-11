@@ -142,6 +142,13 @@ public class SignupFragment extends Fragment {
 
         });
 
+        closebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainIntent();
+            }
+        });
+
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -270,9 +277,7 @@ public class SignupFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
                                     if(task.isSuccessful()){
-                                        Intent mainIntent = new Intent(getActivity(),MainActivity2.class);
-                                        startActivity(mainIntent);
-                                        getActivity().finish();
+                                        mainIntent();
                                     }else{
                                         progressBar.setVisibility(View.INVISIBLE);
                                         SignupBtn.setEnabled(true);
@@ -298,5 +303,10 @@ public class SignupFragment extends Fragment {
         }else{
             email.setError("Invalid Email!",customErrorIcon);
         }
+    }
+    private void mainIntent(){
+        Intent mainIntent = new Intent(getActivity(),MainActivity2.class);
+        startActivity(mainIntent);
+        getActivity().finish();
     }
 }

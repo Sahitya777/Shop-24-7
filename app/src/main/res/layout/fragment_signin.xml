@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            android:id="@+id/sign_in_closebtn"
             android:layout_width="41dp"
             android:layout_height="41dp"
             android:background="@android:color/transparent"
@@ -92,8 +93,9 @@
             android:layout_marginRight="16dp"
             android:background="@color/black"
             android:text="Sign In"
+            android:enabled="false"
             android:textAllCaps="false"
-            android:textColor="#ffffff"
+            android:textColor="#50ffffff"
             android:textSize="16sp"
             app:backgroundTint="@color/material_on_surface_stroke"
             app:layout_constraintBottom_toBottomOf="parent"
