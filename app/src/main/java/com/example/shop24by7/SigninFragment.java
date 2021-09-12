@@ -64,6 +64,8 @@ public class SigninFragment extends Fragment {
 
     private ProgressBar progressBar;
 
+    private TextView forgotPassword;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -109,6 +111,8 @@ public class SigninFragment extends Fragment {
 
         progressBar=view.findViewById(R.id.sign_in_progressbar);
 
+        forgotPassword=view.findViewById(R.id.sign_in_forgot_password);
+
         return view;
     }
 
@@ -119,6 +123,13 @@ public class SigninFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setFragment(new SignupFragment());
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(new ResetPasswordFragment());
             }
         });
         closebtn.setOnClickListener(new View.OnClickListener() {
