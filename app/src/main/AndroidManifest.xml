@@ -13,9 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shop24By7">
         <activity android:name=".MainActivity2"></activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

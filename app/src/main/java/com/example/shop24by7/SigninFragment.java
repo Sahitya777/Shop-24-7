@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.shop24by7.RegisterActivity.onResetpasswordFragment;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,6 +130,7 @@ public class SigninFragment extends Fragment {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onResetpasswordFragment =true;
                 setFragment(new ResetPasswordFragment());
             }
         });
