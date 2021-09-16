@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="btnred">#9f0000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="successGreen">#11A10C</color>
+    <color name="colorPrimary">#CE0000</color>
 </resources>
