@@ -31,7 +31,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -124,7 +123,7 @@ public class SignupFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        firebaseFirestore=firebaseFirestore.getInstance();
+        firebaseFirestore= FirebaseFirestore.getInstance();
 
 
 
@@ -268,14 +267,14 @@ public class SignupFragment extends Fragment {
                 SignupBtn.setTextColor(Color.argb(50,255,255,255));
                 firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull  Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Map<Object,String> userdata = new HashMap<>();
                             userdata.put("fullname",fullName.getText().toString());
 
                             firebaseFirestore.collection("USERS").add(userdata).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override
-                                public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                                public void onComplete(@NonNull  Task<DocumentReference> task) {
                                     if(task.isSuccessful()){
                                         mainIntent();
                                     }else{

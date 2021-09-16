@@ -28,7 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -208,7 +207,7 @@ public class SigninFragment extends Fragment {
 
                 firebaseAuth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull  Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             mainIntent();
                         }else{

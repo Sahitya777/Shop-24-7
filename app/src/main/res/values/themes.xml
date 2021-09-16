@@ -27,5 +27,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:windowBackground">@drawable/splash_actvity_background</item>
         <!-- Customize your theme here. -->
+
+    </style>
+    <style name="Redprogressbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#CE0000</item>
+        <item name="colorPrimaryDark">#CE0000</item>
+        <item name="colorAccent">#CE0000</item>
     </style>
 </resources>
